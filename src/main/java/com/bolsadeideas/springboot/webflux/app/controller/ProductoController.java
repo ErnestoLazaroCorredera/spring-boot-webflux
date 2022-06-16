@@ -1,6 +1,7 @@
 package com.bolsadeideas.springboot.webflux.app.controller;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Optional;
 
@@ -62,7 +63,7 @@ public class ProductoController {
     }
     sessionStatus.setComplete();
     return productoService.save(producto).doOnNext(p -> {
-      Optional.ofNullable(p.getCreateAt()).orElseGet(Date::new);
+      Optional.ofNullable(p.getCreateAt()).orElseGet(Instant::now);
       log.info("Producto guardado: {}, Id: {}", p.getNombre(), p.getId());
     }).thenReturn("redirect:/listar?success=producto+guardado+con+existo");
   }
